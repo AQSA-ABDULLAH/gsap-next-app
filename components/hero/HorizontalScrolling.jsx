@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { gsap } from 'gsap';  // Import gsap
 
 function HorizontalScrolling() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,15 +58,34 @@ function HorizontalScrolling() {
     setSelectedWords(selected);
   }, []);  // Run only once when the component is mounted
 
+  useEffect(() => {
+    if (currentIndex === 0) {
+      // Animate text div from left to right when slider is at its initial position (index 0)
+      gsap.fromTo(
+        ".text-container",
+        { x: '-100%', opacity: 0 },
+        { x: '0%', opacity: 1, duration: 1, ease: 'power2.out' }
+      );
+    } else {
+      gsap.fromTo(
+        ".text-container",
+        { x: '100%', opacity: 0 },
+        { x: '0%', opacity: 0, duration: 1, ease: 'power2.out' }
+      );
+    }
+  }, [currentIndex]); // Trigger the animation when the slide changes
+
   return (
     <div className="flex gap-36 items-center relative w-full h-full overflow-hidden">
-      <div className='w-[360rem] text-white text-[78px] font-bold ml-10'>
+      {/* Text Container with GSAP animation */}
+      <div className='w-[360rem] text-white text-[78px] font-bold ml-10 text-container'>
         <h1>Porsche:</h1>
         <h1>Dream Machine</h1>
         <p className='text-[20px] line-height-10 font-medium'>
           {selectedWords}
         </p>
       </div>
+
       {/* Image Slider Container */}
       <div
         className="flex gap-9 transition-transform duration-500 ease-in-out"
@@ -87,9 +107,4 @@ function HorizontalScrolling() {
 }
 
 export default HorizontalScrolling;
-
-
-
-
-
 
