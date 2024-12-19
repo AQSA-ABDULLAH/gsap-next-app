@@ -51,15 +51,15 @@ export default function Hero() {
     <div className="relative w-full h-screen bg-black">
       {/* Background Image Layer */}
       <div
-        className="background-image absolute top-[14rem] left-[25rem]"
+        className="background-image absolute top-[12rem] left-[17rem]"
         style={{
-          width: "600px", 
-          height: "300px", 
+          width: "850px", 
+          height: "380px", 
           backgroundImage: "url('/assest/logo.png')",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           filter: "invert(1) brightness(1)",
-          opacity: 0.8,
+          opacity: 0.1,
         }}
       ></div>
 
