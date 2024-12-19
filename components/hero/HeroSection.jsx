@@ -2,8 +2,9 @@
 
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
+import HorizontalScrolling from "./HorizontalScrolling";
 
-export default function HorizontalScrolling() {
+export default function Hero() {
   useEffect(() => {
     const backgroundImage = document.querySelector(".background-image");
 
@@ -63,16 +64,7 @@ export default function HorizontalScrolling() {
       ></div>
 
       {/* Text Content Layer */}
-      <div className="relative z-10 text-white p-8">
-        <h1 className="text-4xl font-bold">Heading</h1>
-        <p className="mt-4">Random</p>
-      </div>
+      <HorizontalScrolling />
     </div>
   );
 }
-
-
-
-
-    
-
