@@ -1,5 +1,5 @@
 
-import Hero from '@/components/hero/HeroSection'
+import Hero from '@/components/HorizontalScroll/HeroSection'
 import React from 'react'
 
 export default function page() {
