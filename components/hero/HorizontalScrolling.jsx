@@ -90,7 +90,7 @@ function HorizontalScrolling() {
       <div
         className="flex gap-9 transition-transform duration-500 ease-in-out"
         style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
+          transform: `translateX(-${currentIndex * 108}%)`,
         }}
       >
         {images.map((src, index) => (
