@@ -38,7 +38,7 @@ function Scroll() {
     <section>
       <div className="text-[80px]">verscroll</div>
       <div className="flex justify-center items-center">
-        <div className="overflow-container flex flex-col p-8 gap-16 h-[80rem] w-[58%] overflow-y-scroll">
+        <div className="overflow-container flex flex-col p-8 gap-16 h- w-[58%] overflow-y-scroll">
           <div className="scroll-image1">
             <img
               src="./assest/1.png"

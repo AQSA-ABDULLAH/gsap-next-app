@@ -7,7 +7,7 @@ import React from 'react'
 export default function page() {
   return (
     <div>
-      <Hero />
+      {/* <Hero /> */}
       <VerticalScrolling />
       {/* <Scroll /> */}
     </div>
