@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div>
+    <div className='bg-black'>
       {/* <Hero /> */}
       <VerticalScrolling />
       {/* <Scroll /> */}
