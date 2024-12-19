@@ -78,7 +78,7 @@ function HorizontalScrolling() {
   return (
     <div className="flex gap-36 items-center relative w-full h-full overflow-hidden">
       {/* Text Container with GSAP animation */}
-      <div className='w-[360rem] text-white text-[78px] font-bold ml-10 text-container'>
+      <div className='w-[380rem] text-white text-[78px] font-bold ml-10 text-container'>
         <h1>Porsche:</h1>
         <h1>Dream Machine</h1>
         <p className='text-[20px] line-height-10 font-medium'>

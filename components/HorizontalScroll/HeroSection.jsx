@@ -48,7 +48,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-black">
+    <div className="relative w-full h-screen">
       {/* Background Image Layer */}
       <div
         className="background-image absolute top-[12rem] left-[17rem]"
