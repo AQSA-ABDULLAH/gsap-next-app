@@ -73,15 +73,13 @@ function HorScroll() {
     
         // GSAP animation for the first image
         gsap.from(".scroll1 .img", {
-            scale: 0.8,
-            delay: 1,
-            duration: 2,
+            scale: 0.6,
+            duration: 0.1,
         });
     
         // GSAP animation with ScrollTrigger for the second image
         gsap.from(".scroll2 .img", {
             scale: 0.6,
-            
             duration: 0.1,
             scrollTrigger: {
                 trigger: ".scroll2 .img",
@@ -108,8 +106,8 @@ function HorScroll() {
         });
     
         gsap.from(".scroll4 .img", {
-            scale: 0.8,
-            duration: 1.5,
+            scale: 0.6,
+            duration: 0.1,
             scrollTrigger: {
                 trigger: ".scroll4 .img",
                 scroller: scrollContainerRef.current,
@@ -149,21 +147,21 @@ function HorScroll() {
                     </div>
                     <div className="scroll2 flex-shrink-0">
                         <img
-                            src="./assest/1.png"
+                            src="./assest/2.jpeg"
                             alt="image"
                             className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
                     <div className="scroll3 flex-shrink-0">
                         <img
-                            src="./assest/1.png"
+                            src="./assest/3.png"
                             alt="image"
                             className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
                     <div className="scroll4 flex-shrink-0">
                         <img
-                            src="./assest/1.png"
+                            src="./assest/4.png"
                             alt="image"
                             className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
