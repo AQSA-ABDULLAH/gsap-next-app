@@ -9,26 +9,42 @@ function HorScroll() {
     const [hasScrolled, setHasScrolled] = useState(false);
 
     // Function to animate the text container
-    const animateTextContainer = () => {
-        gsap.fromTo(
-            ".text-container",
-            { opacity: 0, x: '0%' },
-            { opacity: 1, x: '-100%', duration: 1 }
-        );
+    const animateTextContainer = (reverse = false) => {
+        if (reverse) {
+            gsap.to(".text-container", {
+                opacity: 1,
+                x: '0%',
+                duration: 1,
+            });
+        } else {
+            gsap.to(".text-container", {
+                opacity: 1,
+                x: '-100%',
+                duration: 1,
+                delay: 0.2
+            });
+        }
     };
 
     useEffect(() => {
         const handleScroll = (e) => {
             const container = scrollContainerRef.current;
+
             if (isHoveringSlider && container && container.contains(e.target)) {
                 // Prevent vertical scroll and enable horizontal scroll
                 e.preventDefault();
                 container.scrollLeft += e.deltaY;
 
-                // Trigger animation on first scroll
-                if (!hasScrolled) {
+                // Trigger animation when scrolling forward
+                if (!hasScrolled && container.scrollLeft > 0) {
                     animateTextContainer();
                     setHasScrolled(true);
+                }
+
+                // Trigger reverse animation when scrolling back to the start
+                if (hasScrolled && container.scrollLeft <= 0) {
+                    animateTextContainer(true); // Reverse animation
+                    setHasScrolled(false);
                 }
             }
         };
@@ -54,7 +70,7 @@ function HorScroll() {
         <section className="bg-black h-screen pt-20 pl-10 ">
             <div
                 ref={scrollContainerRef}
-                className="overflow-x-scroll flex gap-48 items-center"
+                className="overflow-x-scroll scrollbar-hide flex gap-48 items-center"
                 onMouseEnter={() => setIsHoveringSlider(true)}
                 onMouseLeave={() => setIsHoveringSlider(false)}
             >
