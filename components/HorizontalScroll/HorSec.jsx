@@ -37,21 +37,21 @@ function HorScroll() {
     
 
     return (
-        <section className="bg-black py-16 pt-28 pl-10 h-screen flex gap-48 items-center">
+        <section 
+        ref={scrollContainerRef}
+        className="bg-black pt-28 px-10 h-screen overflow-x-scroll  flex gap-48 items-center"
+        onMouseEnter={() => setIsHoveringSlider(true)}
+        onMouseLeave={() => setIsHoveringSlider(false)}
+        >
             {/* Text Container with GSAP animation */}
-            <div className='w-[80rem] text-white text-[74px] font-bold text-container'>
+            <div className='w-[90rem] text-white text-[74px] font-bold text-container'>
                 <h1>Porsche:</h1>
                 <h1>Dream Machine</h1>
                 <p className='text-[20px] line-height-10 font-medium'>
                     {selectedWords}
                 </p>
             </div>
-            <div
-                ref={scrollContainerRef}
-                className="flex gap-5 overflow-x-scroll whitespace-nowrap w-full"
-                onMouseEnter={() => setIsHoveringSlider(true)} // Enable horizontal scroll
-                onMouseLeave={() => setIsHoveringSlider(false)} // Disable horizontal scroll
-            >
+            <div className="flex gap-16 whitespace-nowrap w-full" >
                 {/* Adjusted asset paths */}
                 <div className="scroll-image1 flex-shrink-0">
                     <img
