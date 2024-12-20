@@ -65,6 +65,7 @@ function HorScroll() {
         const selected = randomWords.sort(() => 0.5 - Math.random()).slice(0, 30).join(' ');
         setSelectedWords(selected);
     }, []);
+    
 
     return (
         <section className="bg-black h-screen pt-20 pl-10 ">
@@ -91,21 +92,21 @@ function HorScroll() {
                             className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image1 flex-shrink-0">
+                    <div className="scroll-image2 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
                             className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image1 flex-shrink-0">
+                    <div className="scroll-image3 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
                             className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image1 flex-shrink-0">
+                    <div className="scroll-image4 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
