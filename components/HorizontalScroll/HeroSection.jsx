@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import HorizontalScrolling from "./HorizontalScrolling";
-import HorScroll from "./HorSec";
 
 export default function Hero() {
   useEffect(() => {
@@ -65,7 +64,7 @@ export default function Hero() {
       ></div>
 
       {/* Text Content Layer */}
-   <HorScroll />
+   <HorizontalScrolling />
     </div>
   );
 }
