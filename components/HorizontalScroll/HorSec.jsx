@@ -1,171 +1,139 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import { gsap } from 'gsap';
+import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 function HorScroll() {
     const scrollContainerRef = useRef(null);
     const [isHoveringSlider, setIsHoveringSlider] = useState(false);
-    const [selectedWords, setSelectedWords] = useState('');
+    const [selectedWords, setSelectedWords] = useState("");
     const [hasScrolled, setHasScrolled] = useState(false);
 
-    // Function to animate the text container
-    const animateTextContainer = (reverse = false) => {
-        if (reverse) {
-            gsap.to(".text-container", {
-                opacity: 1,
-                x: '0%',
-                duration: 1,
-            });
-        } else {
-            gsap.to(".text-container", {
-                opacity: 1,
-                x: '-100%',
-                duration: 1,
-                delay: 0.2
-            });
-        }
+    const IMAGES = [
+        "./assest/1.png",
+        "./assest/2.png",
+        "./assest/3.png",
+        "./assest/4.png",
+        "./assest/1.png",
+        "./assest/2.png",
+        "./assest/3.png",
+        "./assest/4.png",
+        "./assest/1.png",
+        "./assest/2.png",
+        "./assest/3.png",
+        "./assest/4.png",
+    ];
+
+    const RANDOM_WORDS = [
+        "lorem", "ipsum", "dolor", "sit", "amet", "consectetur",
+        "adipiscing", "elit", "sed", "do", "eiusmod", "tempor",
+        "incididunt", "ut", "labore", "et", "dolore", "magna",
+        "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis",
+        "nostrud", "exercitation", "ullamco", "laboris", "nisi",
+        "ut", "aliquip",
+    ];
+
+    // GSAP Animation Logic
+    const animateImage = (selector, { scale, delay = 0, duration = 1, trigger } = {}) => {
+        gsap.from(selector, {
+            scale,
+            delay,
+            duration,
+            scrollTrigger: trigger
+                ? {
+                      trigger,
+                      scroller: scrollContainerRef.current,
+                      horizontal: true,
+                      start: "left center",
+                      end: "right center",
+                      scrub: true,
+                  }
+                : undefined,
+        });
     };
 
+    // Animate text container
+    const animateTextContainer = (reverse = false) => {
+        gsap.to(".text-container", {
+            opacity: 1,
+            x: reverse ? "0%" : "-100%",
+            duration: 1,
+            delay: reverse ? 0 : 0.2,
+        });
+    };
+
+    // Scroll handling for horizontal scrolling
     useEffect(() => {
         const handleScroll = (e) => {
             const container = scrollContainerRef.current;
-
-            if (isHoveringSlider && container && container.contains(e.target)) {
-                // Prevent vertical scroll and enable horizontal scroll
+            if (isHoveringSlider && container?.contains(e.target)) {
                 e.preventDefault();
                 container.scrollLeft += e.deltaY;
 
-                // Trigger animation when scrolling forward
                 if (!hasScrolled && container.scrollLeft > 0) {
                     animateTextContainer();
                     setHasScrolled(true);
-                }
-
-                // Trigger reverse animation when scrolling back to the start
-                if (hasScrolled && container.scrollLeft <= 0) {
-                    animateTextContainer(true); // Reverse animation
+                } else if (hasScrolled && container.scrollLeft <= 0) {
+                    animateTextContainer(true);
                     setHasScrolled(false);
                 }
             }
         };
 
         window.addEventListener("wheel", handleScroll, { passive: false });
-
-        return () => {
-            window.removeEventListener("wheel", handleScroll);
-        };
+        return () => window.removeEventListener("wheel", handleScroll);
     }, [isHoveringSlider, hasScrolled]);
 
+    // Randomize words for text
     useEffect(() => {
-        const randomWords = [
-            'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'ut', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip'
-        ];
-
-        // Select 30 random words
-        const selected = randomWords.sort(() => 0.5 - Math.random()).slice(0, 30).join(' ');
-        setSelectedWords(selected);
+        setSelectedWords(
+            RANDOM_WORDS.sort(() => 0.5 - Math.random())
+                .slice(0, 30)
+                .join(" ")
+        );
     }, []);
 
-    useEffect(() => {
-        // Register ScrollTrigger plugin
-        gsap.registerPlugin(ScrollTrigger);
-    
-        // GSAP animation for the first image
-        gsap.from(".scroll1 .img", {
-            scale: 0.6,
-            duration: 0.1,
+// Initialize GSAP animations
+useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Animate each image
+    IMAGES.forEach((_, idx) => {
+        animateImage(`.scroll${idx + 1} .img`, {
+            scale: idx === 0 ? 0.9 : 0.6, // Scale based on index
+            duration: idx === 0 ? 2 : 0.1, // Custom duration for the first image
+            delay: idx === 0 ? 1 : 0,     // Custom delay for the first image
+            trigger: `.scroll${idx + 1} .img`,
         });
-    
-        // GSAP animation with ScrollTrigger for the second image
-        gsap.from(".scroll2 .img", {
-            scale: 0.6,
-            duration: 0.1,
-            scrollTrigger: {
-                trigger: ".scroll2 .img",
-                scroller: scrollContainerRef.current,
-                horizontal: true,
-                start: "left center",
-                end: "right center",
-                scrub: true,
-            },
-        });
-    
-        // Add more ScrollTrigger animations for other images if needed
-        gsap.from(".scroll3 .img", {
-            scale: 0.6,
-            duration: 0.1,
-            scrollTrigger: {
-                trigger: ".scroll3 .img",
-                scroller: scrollContainerRef.current,
-                horizontal: true,
-                start: "left center",
-                end: "right center",
-                scrub: true,
-            },
-        });
-    
-        gsap.from(".scroll4 .img", {
-            scale: 0.6,
-            duration: 0.1,
-            scrollTrigger: {
-                trigger: ".scroll4 .img",
-                scroller: scrollContainerRef.current,
-                horizontal: true,
-                start: "left center",
-                end: "right center",
-                scrub: true,
-            },
-        });
-    }, []);
-    
+    });
+}, []);
+
 
     return (
-        <section className="bg-black h-screen pt-20 pl-10 ">
+        <section className="bg-black h-screen pt-20 pl-10">
             <div
                 ref={scrollContainerRef}
-                className="overflow-x-scroll scrollbar-hide flex gap-36 items-center"
+                className="overflow-x-scroll scrollbar-hide flex w-full gap-36 items-center"
                 onMouseEnter={() => setIsHoveringSlider(true)}
                 onMouseLeave={() => setIsHoveringSlider(false)}
             >
-                {/* Text Container with GSAP animation */}
-                <div className='text-container w-[90rem] text-white text-[74px] font-bold'>
+                {/* Text Container */}
+                <div className="text-container min-w-[40rem] text-white text-[74px] font-bold">
                     <h1>Porsche:</h1>
                     <h1>Dream Machine</h1>
-                    <p className='text-[20px] line-height-10 font-medium'>
-                        {selectedWords}
-                    </p>
+                    <p className="text-[20px] leading-10 font-medium">{selectedWords}</p>
                 </div>
-                <div className="flex gap-16 whitespace-nowrap w-full">
-                    {/* Adjusted asset paths */}
-                    <div className="scroll1 flex-shrink-0">
-                        <img
-                            src="./assest/1.png"
-                            alt="image"
-                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                        />
-                    </div>
-                    <div className="scroll2 flex-shrink-0">
-                        <img
-                            src="./assest/2.png"
-                            alt="image"
-                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                        />
-                    </div>
-                    <div className="scroll3 flex-shrink-0">
-                        <img
-                            src="./assest/3.png"
-                            alt="image"
-                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                        />
-                    </div>
-                    <div className="scroll4 flex-shrink-0">
-                        <img
-                            src="./assest/4.png"
-                            alt="image"
-                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                        />
-                    </div>
+                {/* Images */}
+                <div className="flex gap-16 whitespace-nowrap">
+                    {IMAGES.map((src, idx) => (
+                        <div key={idx} className={`scroll${idx + 1} flex-shrink-0`}>
+                            <img
+                                src={src}
+                                alt={`image-${idx + 1}`}
+                                className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>
@@ -173,5 +141,6 @@ function HorScroll() {
 }
 
 export default HorScroll;
+
 
 
