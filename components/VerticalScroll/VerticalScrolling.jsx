@@ -6,11 +6,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const imageSections = [
   { id: 1, src: "./assest/1.png", alt: "Image 1" },
-  { id: 2, src: "./assest/2.jpeg", alt: "Image 2" },
+  { id: 2, src: "./assest/2.png", alt: "Image 2" },
   { id: 3, src: "./assest/3.png", alt: "Image 3" },
   { id: 4, src: "./assest/4.png", alt: "Image 4" },
   { id: 5, src: "./assest/1.png", alt: "Image 1" },
-  { id: 6, src: "./assest/2.jpeg", alt: "Image 2" },
+  { id: 6, src: "./assest/2.png", alt: "Image 2" },
   { id: 7, src: "./assest/3.png", alt: "Image 3" },
   { id: 8, src: "./assest/4.png", alt: "Image 4" },
 ];

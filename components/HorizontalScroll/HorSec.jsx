@@ -147,7 +147,7 @@ function HorScroll() {
                     </div>
                     <div className="scroll2 flex-shrink-0">
                         <img
-                            src="./assest/2.jpeg"
+                            src="./assest/2.png"
                             alt="image"
                             className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
