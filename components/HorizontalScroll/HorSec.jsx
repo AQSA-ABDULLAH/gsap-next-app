@@ -34,52 +34,54 @@ function HorScroll() {
         setSelectedWords(selected);
     }, []);
 
-    
+
 
     return (
-        <section 
-        ref={scrollContainerRef}
-        className="bg-black pt-28 px-10 h-screen overflow-x-scroll  flex gap-48 items-center"
-        onMouseEnter={() => setIsHoveringSlider(true)}
-        onMouseLeave={() => setIsHoveringSlider(false)}
-        >
-            {/* Text Container with GSAP animation */}
-            <div className='w-[90rem] text-white text-[74px] font-bold text-container'>
-                <h1>Porsche:</h1>
-                <h1>Dream Machine</h1>
-                <p className='text-[20px] line-height-10 font-medium'>
-                    {selectedWords}
-                </p>
-            </div>
-            <div className="flex gap-16 whitespace-nowrap w-full" >
-                {/* Adjusted asset paths */}
-                <div className="scroll-image1 flex-shrink-0">
-                    <img
-                        src="./assest/1.png"
-                        alt="image"
-                        className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                    />
+        <section className="bg-black h-screen pt-20 pl-10 ">
+            <div
+                ref={scrollContainerRef}
+                className=" overflow-x-scroll flex gap-48 items-center"
+                onMouseEnter={() => setIsHoveringSlider(true)}
+                onMouseLeave={() => setIsHoveringSlider(false)}
+            >
+                {/* Text Container with GSAP animation */}
+                <div className='w-[90rem] text-white text-[74px] font-bold text-container'>
+                    <h1>Porsche:</h1>
+                    <h1>Dream Machine</h1>
+                    <p className='text-[20px] line-height-10 font-medium'>
+                        {selectedWords}
+                    </p>
                 </div>
-                <div className="scroll-image1 flex-shrink-0">
-                    <img
-                        src="./assest/1.png"
-                        alt="image"
-                        className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                    />
-                </div>
-                <div className="scroll-image1 flex-shrink-0">
-                    <img
-                        src="./assest/1.png"
-                        alt="image"
-                        className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                    />
-                </div>
-                <div className="scroll-image1 flex-shrink-0">
-                    <img
-                        src="./assest/1.png"
-                        alt="image"
-                        className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
-                    />
+                <div className="flex gap-16 whitespace-nowrap w-full" >
+                    {/* Adjusted asset paths */}
+                    <div className="scroll-image1 flex-shrink-0">
+                        <img
+                            src="./assest/1.png"
+                            alt="image"
+                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                        />
+                    </div>
+                    <div className="scroll-image1 flex-shrink-0">
+                        <img
+                            src="./assest/1.png"
+                            alt="image"
+                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                        />
+                    </div>
+                    <div className="scroll-image1 flex-shrink-0">
+                        <img
+                            src="./assest/1.png"
+                            alt="image"
+                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                        />
+                    </div>
+                    <div className="scroll-image1 flex-shrink-0">
+                        <img
+                            src="./assest/1.png"
+                            alt="image"
+                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                        />
+                    </div>
                 </div>
             </div>
         </section>
