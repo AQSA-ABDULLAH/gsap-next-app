@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { gsap } from 'gsap';
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 function HorScroll() {
     const scrollContainerRef = useRef(null);
@@ -65,13 +66,67 @@ function HorScroll() {
         const selected = randomWords.sort(() => 0.5 - Math.random()).slice(0, 30).join(' ');
         setSelectedWords(selected);
     }, []);
+
+    useEffect(() => {
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+    
+        // GSAP animation for the first image
+        gsap.from(".scroll1 .img", {
+            scale: 0.8,
+            delay: 1,
+            duration: 2,
+        });
+    
+        // GSAP animation with ScrollTrigger for the second image
+        gsap.from(".scroll2 .img", {
+            scale: 0.6,
+            
+            duration: 0.1,
+            scrollTrigger: {
+                trigger: ".scroll2 .img",
+                scroller: scrollContainerRef.current,
+                horizontal: true,
+                start: "left center",
+                end: "right center",
+                scrub: true,
+            },
+        });
+    
+        // Add more ScrollTrigger animations for other images if needed
+        gsap.from(".scroll3 .img", {
+            scale: 0.6,
+            duration: 0.1,
+            scrollTrigger: {
+                trigger: ".scroll3 .img",
+                scroller: scrollContainerRef.current,
+                horizontal: true,
+                start: "left center",
+                end: "right center",
+                scrub: true,
+            },
+        });
+    
+        gsap.from(".scroll4 .img", {
+            scale: 0.8,
+            duration: 1.5,
+            scrollTrigger: {
+                trigger: ".scroll4 .img",
+                scroller: scrollContainerRef.current,
+                horizontal: true,
+                start: "left center",
+                end: "right center",
+                scrub: true,
+            },
+        });
+    }, []);
     
 
     return (
         <section className="bg-black h-screen pt-20 pl-10 ">
             <div
                 ref={scrollContainerRef}
-                className="overflow-x-scroll scrollbar-hide flex gap-48 items-center"
+                className="overflow-x-scroll scrollbar-hide flex gap-36 items-center"
                 onMouseEnter={() => setIsHoveringSlider(true)}
                 onMouseLeave={() => setIsHoveringSlider(false)}
             >
@@ -85,32 +140,32 @@ function HorScroll() {
                 </div>
                 <div className="flex gap-16 whitespace-nowrap w-full">
                     {/* Adjusted asset paths */}
-                    <div className="scroll-image1 flex-shrink-0">
+                    <div className="scroll1 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
-                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image2 flex-shrink-0">
+                    <div className="scroll2 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
-                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image3 flex-shrink-0">
+                    <div className="scroll3 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
-                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
-                    <div className="scroll-image4 flex-shrink-0">
+                    <div className="scroll4 flex-shrink-0">
                         <img
                             src="./assest/1.png"
                             alt="image"
-                            className="rounded-[12px] w-[40rem] h-[30rem] object-cover"
+                            className="img rounded-[12px] w-[40rem] h-[30rem] object-cover"
                         />
                     </div>
                 </div>
