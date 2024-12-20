@@ -1,10 +1,21 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { gsap } from 'gsap';
 
 function HorScroll() {
     const scrollContainerRef = useRef(null);
     const [isHoveringSlider, setIsHoveringSlider] = useState(false);
     const [selectedWords, setSelectedWords] = useState('');
+    const [hasScrolled, setHasScrolled] = useState(false);
+
+    // Function to animate the text container
+    const animateTextContainer = () => {
+        gsap.fromTo(
+            ".text-container",
+            { opacity: 0, x: '0%' },
+            { opacity: 1, x: '-100%', duration: 1 }
+        );
+    };
 
     useEffect(() => {
         const handleScroll = (e) => {
@@ -13,6 +24,12 @@ function HorScroll() {
                 // Prevent vertical scroll and enable horizontal scroll
                 e.preventDefault();
                 container.scrollLeft += e.deltaY;
+
+                // Trigger animation on first scroll
+                if (!hasScrolled) {
+                    animateTextContainer();
+                    setHasScrolled(true);
+                }
             }
         };
 
@@ -21,8 +38,7 @@ function HorScroll() {
         return () => {
             window.removeEventListener("wheel", handleScroll);
         };
-    }, [isHoveringSlider]);
-
+    }, [isHoveringSlider, hasScrolled]);
 
     useEffect(() => {
         const randomWords = [
@@ -34,25 +50,23 @@ function HorScroll() {
         setSelectedWords(selected);
     }, []);
 
-
-
     return (
         <section className="bg-black h-screen pt-20 pl-10 ">
             <div
                 ref={scrollContainerRef}
-                className=" overflow-x-scroll flex gap-48 items-center"
+                className="overflow-x-scroll flex gap-48 items-center"
                 onMouseEnter={() => setIsHoveringSlider(true)}
                 onMouseLeave={() => setIsHoveringSlider(false)}
             >
                 {/* Text Container with GSAP animation */}
-                <div className='w-[90rem] text-white text-[74px] font-bold text-container'>
+                <div className='text-container w-[90rem] text-white text-[74px] font-bold'>
                     <h1>Porsche:</h1>
                     <h1>Dream Machine</h1>
                     <p className='text-[20px] line-height-10 font-medium'>
                         {selectedWords}
                     </p>
                 </div>
-                <div className="flex gap-16 whitespace-nowrap w-full" >
+                <div className="flex gap-16 whitespace-nowrap w-full">
                     {/* Adjusted asset paths */}
                     <div className="scroll-image1 flex-shrink-0">
                         <img
@@ -89,3 +103,5 @@ function HorScroll() {
 }
 
 export default HorScroll;
+
+
