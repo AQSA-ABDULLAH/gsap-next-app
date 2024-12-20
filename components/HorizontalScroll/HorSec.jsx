@@ -34,10 +34,11 @@ function HorScroll() {
     ];
 
     // GSAP Animation Logic
-    const animateImage = (selector, { scale, delay = 0, duration = 1, trigger } = {}) => {
+    const animateImage = (selector, { scale, filter, delay = 0, duration = 1, trigger } = {}) => {
         gsap.from(selector, {
             scale,
             delay,
+            filter,
             duration,
             scrollTrigger: trigger
                 ? {
@@ -51,7 +52,7 @@ function HorScroll() {
                 : undefined,
         });
     };
-
+    
     // Animate text container
     const animateTextContainer = (reverse = false) => {
         gsap.to(".text-container", {
@@ -101,8 +102,9 @@ useEffect(() => {
     IMAGES.forEach((_, idx) => {
         animateImage(`.scroll${idx + 1} .img`, {
             scale: idx === 0 ? 0.9 : 0.6, // Scale based on index
+            filter: idx === 0 ? "none" : "blur(6px)", // Valid filter
             duration: idx === 0 ? 2 : 0.1, // Custom duration for the first image
-            delay: idx === 0 ? 1 : 0,     // Custom delay for the first image
+            delay: idx === 0 ? 1 : 2,     // Custom delay for the first image
             trigger: `.scroll${idx + 1} .img`,
         });
     });
