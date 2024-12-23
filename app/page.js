@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import VerScroll from "@/components/VerScroll";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero from "@/components/HeroSection";
@@ -85,11 +84,10 @@ export default function Page() {
   };
 
   // HORIZONTAL SCROLLER IMAGES ANIMATIONS
-  const animateImage = (selector, { scale, filter, delay = 0, duration = 1, trigger } = {}) => {
+  const animateImage = (selector, { scale, delay = 0, duration = 1, trigger } = {}) => {
     gsap.from(selector, {
       scale,
       delay,
-      filter,
       duration,
       scrollTrigger: trigger
         ? {
@@ -129,7 +127,6 @@ export default function Page() {
     IMAGES.forEach((_, idx) => {
       animateImage(`.scroll${idx + 1} .img`, {
         scale: idx === 0 ? 0.9 : 0.6, // Scale based on index
-        filter: idx === 0 ? "none" : "blur(6px)", // Valid filter
         duration: idx === 0 ? 2 : 0.1, // Custom duration for the first image
         delay: idx === 0 ? 1 : 2, // Custom delay for the first image
         trigger: `.scroll${idx + 1} .img`,
