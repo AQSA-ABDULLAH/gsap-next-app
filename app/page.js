@@ -79,7 +79,7 @@ export default function Page() {
       <div
         ref={horScrollRef}
         onWheel={handleScroll}
-        className="h-screen w-screen flex overflow-x-scroll flex-shrink-0"
+        className="h-screen w-screen flex overflow-x-scroll scrollbar-hide flex-shrink-0"
       >
         <HorScroll />
       </div>
@@ -88,7 +88,7 @@ export default function Page() {
       <div
         ref={verScrollRef}
         onWheel={handleVerScroll}
-        className="h-screen w-screen overflow-y-scroll flex-shrink-0 overflow-container"
+        className="h-screen w-screen overflow-y-scroll flex-shrink-0 scrollbar-hide overflow-container"
       >
         <VerScroll />
       </div>
