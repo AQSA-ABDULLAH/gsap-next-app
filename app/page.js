@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import HorScroll from "@/components/HorScroll";
 import VerScroll from "@/components/VerScroll";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,15 +11,19 @@ export default function Page() {
   const verScrollRef = useRef(null);
   const [hasScrolledHorizontal, setHasScrolledHorizontal] = useState(false);
 
-  const imageSections = [
-    { id: 1, src: "./assest/1.png", alt: "Image 1" },
-    { id: 2, src: "./assest/2.png", alt: "Image 2" },
-    { id: 3, src: "./assest/3.png", alt: "Image 3" },
-    { id: 4, src: "./assest/4.png", alt: "Image 4" },
-    { id: 5, src: "./assest/1.png", alt: "Image 1" },
-    { id: 6, src: "./assest/2.png", alt: "Image 2" },
-    { id: 7, src: "./assest/3.png", alt: "Image 3" },
-    { id: 8, src: "./assest/4.png", alt: "Image 4" },
+  const IMAGES = [
+    "./assest/1.png",
+    "./assest/2.png",
+    "./assest/3.png",
+    "./assest/4.png",
+    "./assest/1.png",
+    "./assest/2.png",
+    "./assest/3.png",
+    "./assest/4.png",
+    "./assest/1.png",
+    "./assest/2.png",
+    "./assest/3.png",
+    "./assest/4.png",
   ];
 
   const handleScroll = (e) => {
@@ -34,8 +37,10 @@ export default function Page() {
 
       if (horScroll.scrollLeft < maxScrollLeft && e.deltaY > 0) {
         horScroll.scrollLeft += e.deltaY;
+        animateTextContainer();
         setHasScrolledHorizontal(true); // Update state when scrolling horizontally
       } else if (horScroll.scrollLeft > 0 && e.deltaY < 0) {
+        animateTextContainer(true);
         horScroll.scrollLeft += e.deltaY;
         setHasScrolledHorizontal(true); // Update state for horizontal scroll
       } else if (horScroll.scrollLeft >= maxScrollLeft && e.deltaY > 0) {
@@ -58,66 +63,51 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  // TEXT ANIMATION
+  const animateTextContainer = (reverse = false) => {
+    gsap.to(".text-container", {
+      opacity: 1,
+      x: reverse ? "0%" : "-100%",
+      duration: 1,
+      delay: reverse ? 0 : 0.2,
+    });
+  };
 
-    if (hasScrolledHorizontal) {
-      // Text container animation
-      gsap.to(".text-container", {
-        opacity: 1,
-        x: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: ".text-container",
-          start: "top 80%",
-          end: "bottom top",
-          scrub: true,
-          markers: true, // Enable markers for debugging
-        },
-      });
-
-      // Animate images on horizontal scroll
-      imageSections.forEach((_, idx) => {
-        gsap.from(`.scroll${idx + 1} .img`, {
-          scale: idx === 0 ? 0.9 : 0.6,
-          filter: idx === 0 ? "none" : "blur(6px)",
-          duration: 1.5,
-          delay: 0.2,
-          scrollTrigger: {
-            trigger: `.scroll${idx + 1} .img`,
+  // HORIZONTAL SCROLLER IMAGES ANIMATIONS
+  const animateImage = (selector, { scale, filter, delay = 0, duration = 1, trigger } = {}) => {
+    gsap.from(selector, {
+      scale,
+      delay,
+      filter,
+      duration,
+      scrollTrigger: trigger
+        ? {
+            trigger,
             scroller: horScrollRef.current,
             horizontal: true,
             start: "left center",
             end: "right center",
             scrub: true,
-            markers: true, // Enable markers for debugging
-          },
-        });
-      });
-    }
-  }, [hasScrolledHorizontal, imageSections]);
+          }
+        : undefined,
+    });
+  };
 
-
-  
-
+  // Initialize GSAP animations
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    imageSections.forEach((section) => {
-      gsap.from(`.scroll-image${section.id} .image`, {
-        scale: 0.45,
-        duration: 0.1,
-        scrollTrigger: {
-          trigger: `.scroll-image${section.id} .image`,
-          scroller: ".overflow-container",
-          start: "top bottom", // Changed to trigger earlier and works for both scroll directions
-          end: "bottom top",  // Works for both scroll directions as well
-          scrub: true,  // Smooth animation
-          markers: false,  // You can enable markers for debugging if needed
-        },
+    // Animate each image
+    IMAGES.forEach((_, idx) => {
+      animateImage(`.scroll${idx + 1} .img`, {
+        scale: idx === 0 ? 0.9 : 0.6, // Scale based on index
+        filter: idx === 0 ? "none" : "blur(6px)", // Valid filter
+        duration: idx === 0 ? 2 : 0.1, // Custom duration for the first image
+        delay: idx === 0 ? 1 : 2, // Custom delay for the first image
+        trigger: `.scroll${idx + 1} .img`,
       });
     });
-  }, imageSections);
+  }, []);
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-black text-white flex flex-col">
