@@ -28,6 +28,26 @@ export default function HorScroll() {
     "ut", "aliquip",
   ];
 
+  // Animate text container
+  const animateTextContainer = (reverse = false) => {
+    gsap.to(".text-container", {
+      opacity: 1,
+      x: reverse ? "0%" : "-100%",
+      duration: 1,
+      delay: reverse ? 0 : 0.2,
+    });
+  };
+
+  // Randomize words for text
+  useEffect(() => {
+    setSelectedWords(
+      RANDOM_WORDS.sort(() => 0.5 - Math.random())
+        .slice(0, 30)
+        .join(" ")
+    );
+  }, []);
+
+
   return (
     <section className="bg-black pt-20 pl-10">
       <div

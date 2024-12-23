@@ -1,14 +1,15 @@
 "use client";
 
+import React, { useEffect, useRef, useState } from "react";  // Added useState here
 import HorScroll from '@/components/HorScroll';
 import VerScroll from '@/components/VerScroll';
-import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Page() {
   const horScrollRef = useRef(null);
   const verScrollRef = useRef(null);
+  const [hasScrolledHorizontal, setHasScrolledHorizontal] = useState(false);  // Now works because useState is imported
 
   const imageSections = [
     { id: 1, src: "./assest/1.png", alt: "Image 1" },
@@ -57,6 +58,40 @@ export default function Page() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Trigger animation only when horizontal scroll is detected
+    if (hasScrolledHorizontal) {
+      gsap.to(".text-container", {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: ".text-container",
+          start: "top 80%",
+          end: "bottom top",
+          scrub: true,
+          markers: false,
+        },
+      });
+
+      // Animate images on horizontal scroll
+      imageSections.forEach((_, idx) => {
+        gsap.from(`.scroll${idx + 1} .img`, {
+          scale: idx === 0 ? 0.9 : 0.6,
+          filter: idx === 0 ? "none" : "blur(6px)",
+          duration: 1.5,
+          delay: 0.2,
+          scrollTrigger: {
+            trigger: `.scroll${idx + 1} .img`,
+            scroller: horScrollRef.current,
+            horizontal: true,
+            start: "left center",
+            end: "right center",
+            scrub: true,
+          },
+        });
+      });
+    }
+
     imageSections.forEach((section) => {
       gsap.from(`.scroll-image${section.id} .image`, {
         scale: 0.45,
@@ -71,7 +106,7 @@ export default function Page() {
         },
       });
     });
-  }, [imageSections]);
+  }, [imageSections, hasScrolledHorizontal]);
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-black text-white flex flex-col">
@@ -88,12 +123,10 @@ export default function Page() {
       <div
         ref={verScrollRef}
         onWheel={handleVerScroll}
-        className="h-screen w-screen overflow-y-scroll flex-shrink-0 scrollbar-hide overflow-container"
+        className="h-screen w-screen overflow-y-scroll flex-shrink-0  overflow-container"
       >
         <VerScroll />
       </div>
     </div>
   );
 }
-
-
