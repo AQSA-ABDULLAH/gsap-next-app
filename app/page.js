@@ -26,6 +26,17 @@ export default function Page() {
     "./assest/4.png",
   ];
 
+  const imageSections = [
+    { id: 1, image: "./assest/1.png" },
+    { id: 2, image: "./assest/2.png" },
+    { id: 3, image: "./assest/3.png" },
+    { id: 4, image: "./assest/4.png" },
+    { id: 5, image: "./assest/1.png" },
+    { id: 6, image: "./assest/2.png" },
+    { id: 7, image: "./assest/3.png" },
+    { id: 8, image: "./assest/4.png" },
+  ];
+
   const handleScroll = (e) => {
     e.preventDefault();
 
@@ -82,14 +93,31 @@ export default function Page() {
       duration,
       scrollTrigger: trigger
         ? {
-            trigger,
-            scroller: horScrollRef.current,
-            horizontal: true,
-            start: "left center",
-            end: "right center",
-            scrub: true,
-          }
+          trigger,
+          scroller: horScrollRef.current,
+          horizontal: true,
+          start: "left center",
+          end: "right center",
+          scrub: true,
+        }
         : undefined,
+    });
+  };
+
+  // VERTICAL SCROLL IMAGE ANIMATIONS
+  const animateVerScrollImages = () => {
+    imageSections.forEach((section) => {
+      gsap.from(`.scroll-image${section.id} .image`, {
+        scale: 0.45,
+        duration: 0.1,
+        scrollTrigger: {
+          trigger: `.scroll-image${section.id} .image`,
+          scroller: verScrollRef.current,
+          start: "top 80%",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
     });
   };
 
@@ -97,7 +125,7 @@ export default function Page() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Animate each image
+    // Animate each image in the horizontal scroll
     IMAGES.forEach((_, idx) => {
       animateImage(`.scroll${idx + 1} .img`, {
         scale: idx === 0 ? 0.9 : 0.6, // Scale based on index
@@ -107,9 +135,10 @@ export default function Page() {
         trigger: `.scroll${idx + 1} .img`,
       });
     });
-  }, []);
 
-  
+    // Add animation for vertical scroll images
+    animateVerScrollImages();
+  }, []);
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-black text-white flex flex-col">
@@ -123,13 +152,20 @@ export default function Page() {
       </div>
 
       {/* Vertical Scroll Section */}
-      <div
-        ref={verScrollRef}
-        onWheel={handleVerScroll}
-        className="h-screen w-screen overflow-y-scroll flex-shrink-0 overflow-container"
-      >
-        <VerScroll />
+      <div className="flex justify-center items-center h-screen">
+        <div
+          ref={verScrollRef}
+          onWheel={handleVerScroll}
+          className="flex flex-col p-8 pb-20 gap-10 h-[80%] w-[58%] overflow-y-scroll overflow-container scrollbar-hide"
+        >
+          {imageSections.map((section, idx) => (
+            <div key={section.id} className={`scroll-image${section.id}`}>
+              <img src={section.image} alt={`scroll image ${section.id}`} className="image" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
