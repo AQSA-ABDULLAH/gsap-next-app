@@ -1,16 +1,56 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function VerScroll() {
+    const imageSections = [
+        { id: 1, src: "./assest/1.png", alt: "Image 1" },
+        { id: 2, src: "./assest/2.png", alt: "Image 2" },
+        { id: 3, src: "./assest/3.png", alt: "Image 3" },
+        { id: 4, src: "./assest/4.png", alt: "Image 4" },
+        { id: 5, src: "./assest/1.png", alt: "Image 1" },
+        { id: 6, src: "./assest/2.png", alt: "Image 2" },
+        { id: 7, src: "./assest/3.png", alt: "Image 3" },
+        { id: 8, src: "./assest/4.png", alt: "Image 4" },
+      ];
+
+    //   ANIMATION
+    useEffect(() => {
+        // Register ScrollTrigger plugin
+        gsap.registerPlugin(ScrollTrigger);
+    
+        // Define GSAP animations for all sections
+        imageSections.forEach((section) => {
+          gsap.from(`.scroll-image${section.id} .image`, {
+            scale: 0.45,
+            duration: 0.1,
+            scrollTrigger: {
+              trigger: `.scroll-image${section.id} .image`,
+              scroller: ".overflow-container",
+              start: "top 80%",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        });
+      }, []);
+
+      
   return (
-    <div className="flex flex-col gap-10 p-10 bg-black text-white">
-      {Array(5)
-        .fill(null)
-        .map((_, index) => (
-          <div key={index} className="text-[30px] text-white">
-            <h1>Vertical Section {index + 1}</h1>
-            <p>Content goes here...</p>
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col p-8 pb-20 gap-10 h-[80%] w-[58%] overflow-container">
+        {imageSections.map((section) => (
+          <div key={section.id} className={`scroll-image${section.id}`}>
+            <img
+              src={section.src}
+              alt={section.alt}
+              className="image w-[46rem] h-[28rem] object-cover"
+            />
           </div>
         ))}
+      </div>
     </div>
   );
 }
