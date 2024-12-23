@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
-import HorizontalScrolling from "./HorizontalScrolling";
+import HorScroll from "../HorScroll";
 
 export default function Hero() {
   useEffect(() => {
@@ -51,10 +51,10 @@ export default function Hero() {
     <div className="relative w-full h-screen">
       {/* Background Image Layer */}
       <div
-        className="background-image absolute top-[12rem] left-[17rem]"
+        className="background-image fixed top-[12rem] left-[17rem]"
         style={{
-          width: "850px", 
-          height: "380px", 
+          width: "850px",
+          height: "380px",
           backgroundImage: "url('/assest/logo.png')",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
@@ -64,7 +64,7 @@ export default function Hero() {
       ></div>
 
       {/* Text Content Layer */}
-   <HorizontalScrolling />
+      <HorScroll />
     </div>
   );
 }

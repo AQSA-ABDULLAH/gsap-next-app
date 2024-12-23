@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";  // Added useState here
-import HorScroll from '@/components/HorScroll';
-import VerScroll from '@/components/VerScroll';
+import React, { useEffect, useRef, useState } from "react";
+import HorScroll from "@/components/HorScroll";
+import VerScroll from "@/components/VerScroll";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Hero from "@/components/HorizontalScroll/HeroSection";
 
 export default function Page() {
   const horScrollRef = useRef(null);
   const verScrollRef = useRef(null);
-  const [hasScrolledHorizontal, setHasScrolledHorizontal] = useState(false);  // Now works because useState is imported
+  const [hasScrolledHorizontal, setHasScrolledHorizontal] = useState(false);
 
   const imageSections = [
     { id: 1, src: "./assest/1.png", alt: "Image 1" },
@@ -33,10 +34,12 @@ export default function Page() {
 
       if (horScroll.scrollLeft < maxScrollLeft && e.deltaY > 0) {
         horScroll.scrollLeft += e.deltaY;
+        setHasScrolledHorizontal(true); // Update state when scrolling horizontally
       } else if (horScroll.scrollLeft > 0 && e.deltaY < 0) {
         horScroll.scrollLeft += e.deltaY;
+        setHasScrolledHorizontal(true); // Update state for horizontal scroll
       } else if (horScroll.scrollLeft >= maxScrollLeft && e.deltaY > 0) {
-        verScroll.scrollIntoView({ behavior: 'smooth' });
+        verScroll.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
@@ -48,7 +51,7 @@ export default function Page() {
 
     if (verScroll) {
       if (verScroll.scrollTop === 0 && e.deltaY < 0) {
-        horScroll.scrollIntoView({ behavior: 'smooth' });
+        horScroll.scrollIntoView({ behavior: "smooth" });
       } else {
         verScroll.scrollTop += e.deltaY;
       }
@@ -58,8 +61,8 @@ export default function Page() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Trigger animation only when horizontal scroll is detected
     if (hasScrolledHorizontal) {
+      // Text container animation
       gsap.to(".text-container", {
         opacity: 1,
         x: 0,
@@ -69,7 +72,7 @@ export default function Page() {
           start: "top 80%",
           end: "bottom top",
           scrub: true,
-          markers: false,
+          markers: true, // Enable markers for debugging
         },
       });
 
@@ -87,10 +90,18 @@ export default function Page() {
             start: "left center",
             end: "right center",
             scrub: true,
+            markers: true, // Enable markers for debugging
           },
         });
       });
     }
+  }, [hasScrolledHorizontal, imageSections]);
+
+
+  
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
 
     imageSections.forEach((section) => {
       gsap.from(`.scroll-image${section.id} .image`, {
@@ -106,7 +117,7 @@ export default function Page() {
         },
       });
     });
-  }, [imageSections, hasScrolledHorizontal]);
+  }, imageSections);
 
   return (
     <div className="h-screen w-screen overflow-hidden bg-black text-white flex flex-col">
@@ -116,14 +127,14 @@ export default function Page() {
         onWheel={handleScroll}
         className="h-screen w-screen flex overflow-x-scroll scrollbar-hide flex-shrink-0"
       >
-        <HorScroll />
+        <Hero />
       </div>
 
       {/* Vertical Scroll Section */}
       <div
         ref={verScrollRef}
         onWheel={handleVerScroll}
-        className="h-screen w-screen overflow-y-scroll flex-shrink-0  overflow-container"
+        className="h-screen w-screen overflow-y-scroll flex-shrink-0 overflow-container"
       >
         <VerScroll />
       </div>
