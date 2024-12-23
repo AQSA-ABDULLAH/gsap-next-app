@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { gsap } from "gsap";
-import HorScroll from "../HorScroll";
+import HorScroll from "./HorScroll";
 
 export default function Hero() {
   useEffect(() => {

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import VerScroll from "@/components/VerScroll";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hero from "@/components/HorizontalScroll/HeroSection";
+import Hero from "@/components/HeroSection";
 
 export default function Page() {
   const horScrollRef = useRef(null);
